@@ -11,13 +11,12 @@ def main():
     # Colored text
     colorama.init(autoreset=True)
 
-    if len(sys.argv) != 4:
+    if len(sys.argv) <= 4:
         print(Fore.RED + Style.BRIGHT + '[!] Wrong usage...')
         print(Fore.RED + Style.BRIGHT + '[!] Sample usage - python3 main.py -e \'Hello World\' \'Testing\'')
     else:
         print(Fore.GREEN + '[+] Starting up Vigenere Cipher\n')
         time.sleep(2.5)
-        print(sys.argv[2], sys.argv[3])
 
         if sys.argv[1] == '-e' or sys.argv[1] == '--encrypt':
             # -e for encryption
@@ -70,7 +69,7 @@ def encryption(plain_text, key):
             cipher_text += plain_character
         else:
             # Getting new character
-            position = alpha.find(plain_character) + alpha.find(key[key_character_pos % len(key)])
+            position = alpha.find(plain_character) + alpha.find(key[key_character_pos % len(key)].upper())
             cipher_text += alpha[position % len(alpha)]
 
             # Incrementing key position
@@ -97,8 +96,9 @@ def decryption(cipher_text, key):
             plain_text += cipher_character
         else:
             # Getting new character
-            position = alpha.find(cipher_character) - alpha.find(key[key_character_pos % len(key)])
+            position = abs(alpha.find(cipher_character) - alpha.find(key[key_character_pos % len(key)].upper()))
             plain_text += alpha[position % len(alpha)]
+            print(alpha[position % len(alpha)])
 
             # Incrementing key position
             key_character_pos += 1
